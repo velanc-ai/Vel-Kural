@@ -1,8 +1,6 @@
 venv/
-env/
-velkural/
-.env
 __pycache__/
 *.pyc
 .vscode/
 .idea/
+.env
