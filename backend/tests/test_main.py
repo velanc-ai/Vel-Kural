@@ -1,9 +1,16 @@
+from dotenv import load_dotenv
 import os
 import sys
 from fastapi.testclient import TestClient
 
 # Mock OpenAI API Key for the test so it doesn't fail initialization
-os.environ["OPENAI_API_KEY"] = "sk-dummy-key"
+#os.environ["OPENAI_API_KEY"] = "sk-dummy-key"
+load_dotenv()
+
+api_key = os.getenv("OPENAI_API_KEY")
+
+if api_key is None:
+    raise ValueError("OPENAI_API_KEY not found in environment variables")
 
 # Add backend directory to path so we can import from main.py
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
