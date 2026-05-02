@@ -7,9 +7,9 @@ from fastapi.testclient import TestClient
 #os.environ["OPENAI_API_KEY"] = "sk-dummy-key"
 load_dotenv()
 
-api_key = os.getenv("OPENAI_API_KEY")
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 
-if api_key is None:
+if OPENAI_API_KEY is None:
     raise ValueError("OPENAI_API_KEY not found in environment variables")
 
 # Add backend directory to path so we can import from main.py
