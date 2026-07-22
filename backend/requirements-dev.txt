@@ -1,0 +1,8 @@
+# Development and CI dependencies.
+# Runtime deps live in requirements.txt and ship in the Docker image;
+# everything here is test/lint tooling that should not.
+-r requirements.txt
+
+pytest
+httpx
+flake8
