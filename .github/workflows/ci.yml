@@ -1,32 +1,61 @@
 name: Continuous Integration
 
+# Run on every branch, not just main. A pipeline that only checks main
+# tells you about breakage after it has already landed.
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "**" ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ "**" ]
 
 jobs:
-  test:
+  lint:
     runs-on: ubuntu-latest
-    
+
     defaults:
       run:
         working-directory: ./backend
 
     steps:
-    - uses: actions/checkout@v4
-    
-    - name: Set up Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: '3.10'
-        
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install -r requirements.txt
-        
-    - name: Run Pytest
-      run: |
-        pytest tests/
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.14'
+          cache: 'pip'
+          cache-dependency-path: backend/requirements-dev.txt
+
+      - name: Install flake8
+        run: pip install flake8
+
+      - name: Lint
+        run: flake8 . --max-line-length=120
+
+  test:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: ./backend
+
+    env:
+      # These tests never call OpenAI, so no real secret is needed here.
+      # Keeping CI free of real credentials keeps it fast, cheap and safe.
+      OPENAI_API_KEY: sk-test-dummy
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.14'
+          cache: 'pip'
+          cache-dependency-path: backend/requirements-dev.txt
+
+      - name: Install dependencies
+        run: pip install -r requirements-dev.txt
+
+      - name: Run Pytest
+        run: pytest tests/ -v

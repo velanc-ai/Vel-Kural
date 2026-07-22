@@ -9,5 +9,3 @@ langchain-openai
 langgraph
 faiss-cpu
 tiktoken
-pytest
-httpx
