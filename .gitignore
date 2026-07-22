@@ -1,6 +1,11 @@
+velkural/
 venv/
+.venv/
 __pycache__/
 *.pyc
+.pytest_cache/
 .vscode/
 .idea/
 .env
+*.log
+build_log.txt

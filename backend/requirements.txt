@@ -6,11 +6,8 @@ pydantic
 python-dotenv
 langchain
 langchain-openai
-langchain-community
+langgraph
 faiss-cpu
 tiktoken
 pytest
 httpx
-qdrant-client
-langgraph
-ragas

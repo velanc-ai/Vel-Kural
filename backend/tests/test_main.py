@@ -15,7 +15,7 @@ if OPENAI_API_KEY is None:
 # Add backend directory to path so we can import from main.py
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
-from main import app
+from app.main import app
 
 client = TestClient(app)
 
